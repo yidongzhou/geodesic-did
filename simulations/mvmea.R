@@ -2,7 +2,6 @@
 # Multivariate distributions  #
 ###############################
 
-library(MASS)
 script_arg <- grep("^--file=", commandArgs(trailingOnly = FALSE), value = TRUE)
 script_path <- normalizePath(gsub("~+~", " ", sub("^--file=", "", script_arg[1]), fixed = TRUE), mustWork = TRUE)
 root <- normalizePath(file.path(dirname(script_path), ".."), mustWork = TRUE)
@@ -28,7 +27,6 @@ alpha2 <- 1
 beta <- 0.2
 Sigma <- 0.5 * diag(2)
 N <- 500    # number of observations per (i, t)
-Npop <- 500 # number of observations per (i, t) for population targets
 nPopUnits <- 1000 # number of units per group for population targets
 
 # helper to sample from the bivariate Gaussian mixture
@@ -51,7 +49,6 @@ upper_vec <- c(4, 4)
 gx <- seq(lower_vec[1], upper_vec[1], length.out = 10)
 gy <- seq(lower_vec[2], upper_vec[2], length.out = 10)
 grid <- as.matrix(expand.grid(gx, gy))  # 100 x 2
-Mgrid <- nrow(grid)
 
 # closed-form bivariate normal density with Sigma = 0.5 I_2
 phi_bvn <- function(x, mu) {
@@ -147,6 +144,5 @@ dir.create(file.path(root, "output", "simulations"), recursive = TRUE, showWarni
 save(emmv, file = file.path(root, "output", "simulations", "emmv.RData"))
 
 aemmv <- colMeans(emmv)
-# apply(emmv, 2, sd)
 fitmmv <- lm(log(aemmv)~log(nVec))
-print(summary(fitmmv))# archived result used in the paper: -0.473
+cat(sprintf("Estimated log-log slope for Figure 2: %.6f\n", coef(fitmmv)[2]))

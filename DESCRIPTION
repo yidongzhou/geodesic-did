@@ -8,7 +8,7 @@ Authors@R: c(
     person("Taisuke", "Otsu", role = "aut"),
     person("Hans-Georg", "Müller", role = "aut")
   )
-Description: Implementation, simulations, data-analysis scripts, archived
+Description: Implementation, simulations, data-analysis scripts, simulation
     results, and figure-generation code for the paper Geodesic
     Difference-in-Differences.
 License: MIT + file LICENSE
@@ -25,9 +25,8 @@ Imports:
     manifold,
     MASS,
     patchwork,
-    plotly,
+    png,
     pracma,
     purrr,
     readxl,
-    scatterplot3d,
     truncnorm

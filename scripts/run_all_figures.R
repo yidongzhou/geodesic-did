@@ -1,4 +1,4 @@
-# Generate Figures 2--7 from the archived RData files.
+# Generate Figures 2--7 from the included data and figure files.
 
 script_arg <- grep("^--file=", commandArgs(trailingOnly = FALSE), value = TRUE)
 script_path <- normalizePath(gsub("~+~", " ", sub("^--file=", "", script_arg[1]), fixed = TRUE), mustWork = TRUE)

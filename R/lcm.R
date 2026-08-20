@@ -38,9 +38,6 @@ lcm <- function(n, m) {
 
 plcm <- function(x) {
   stopifnot(is.numeric(x))
-  # if (any(floor(x) != ceiling(x)) || length(x) < 2)
-  #   stop("Argument 'x' must be an integer vector of length >= 2.")
-
   x <- x[x != 0]
   n <- length(x)
   if (n == 0) {

@@ -1,4 +1,4 @@
-# Validate archived Monte Carlo output and real-data numerical anchors.
+# Verify the simulation and real-data results reported in the paper.
 
 script_arg <- grep("^--file=", commandArgs(trailingOnly = FALSE), value = TRUE)
 script_path <- normalizePath(gsub("~+~", " ", sub("^--file=", "", script_arg[1]), fixed = TRUE), mustWork = TRUE)
@@ -8,10 +8,16 @@ load_one <- function(path, name) {
   load(path, envir = environment)
   environment[[name]]
 }
+
 n_values <- c(50, 200, 1000)
 em <- load_one(file.path(root, "data", "derived", "em.RData"), "em")
 emmv <- load_one(file.path(root, "data", "derived", "emmv.RData"), "emmv")
 en <- load_one(file.path(root, "data", "derived", "en.RData"), "en")
+stopifnot(
+  identical(dim(em), c(500L, 3L)),
+  identical(dim(emmv), c(500L, 3L)),
+  identical(dim(en), c(500L, 3L))
+)
 slopes <- vapply(list(em, emmv, en), function(x) {
   unname(coef(lm(log(colMeans(x)) ~ log(n_values)))[2])
 }, numeric(1))
@@ -42,4 +48,4 @@ stopifnot(
   isTRUE(all.equal(energy_pre$distance, 0.0160604, tolerance = 1e-6))
 )
 
-cat("Archived-result checks passed.\n")
+cat("Reported-result checks passed.\n")

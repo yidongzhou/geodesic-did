@@ -92,6 +92,5 @@ dir.create(file.path(root, "output", "simulations"), recursive = TRUE, showWarni
 save(en, file = file.path(root, "output", "simulations", "en.RData"))
 
 aen <- colMeans(en)
-# apply(en, 2, sd)
 fitn <- lm(log(aen)~log(nVec))
-print(summary(fitn))# archived result used in the paper: -0.509
+cat(sprintf("Estimated log-log slope for Figure 2: %.6f\n", coef(fitn)[2]))

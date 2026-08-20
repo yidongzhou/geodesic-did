@@ -1,22 +1,25 @@
 # Data provenance and licensing
 
-## Monte Carlo results
+## Simulation results
 
-`derived/em.RData`, `derived/emmv.RData`, and `derived/en.RData` are the archived
-Monte Carlo error matrices used in Figure 2. Each is a `500 x 3` matrix for
-sample sizes 50, 200, and 1000. They are distributed with the project under the
-repository’s MIT License.
+`derived/em.RData`, `derived/emmv.RData`, and `derived/en.RData` contain the
+simulation results produced by `simulations/mea.R`, `simulations/mvmea.R`, and
+`simulations/net.R`, respectively, and are used to generate Figure 2. Each file
+contains a `500 x 3` matrix of estimation errors for sample sizes 50, 200, and
+1000. The files are included so that Figure 2 can be reproduced without
+rerunning the full simulations.
 
 ## Human Mortality Database
 
-`derived/mortality_results.RData` is a frozen analysis object created from the
-Human Mortality Database (HMD) period life tables at one-year ages and five-year
-periods. It contains only the smoothed curves and geodesic DID results needed to
-reproduce Figures 3–5; it does not contain the original HMD life-table files.
+`derived/mortality_results.RData` contains processed analysis results created
+from the Human Mortality Database (HMD) period life tables at one-year ages and
+five-year periods. It contains only the smoothed curves and geodesic DID results
+needed to reproduce Figures 3–5; it does not contain the original HMD life-table
+files.
 
 HMD-produced data are available under the Creative Commons Attribution 4.0
-International License. HMD asks users preferably to download current data from
-HMD rather than redistribute copies because its estimates are updated. See the
+International License. HMD asks users to download current data directly rather
+than redistribute copies, because its estimates are updated. See the
 [HMD user agreement](https://www.mortality.org/Data/UserAgreement) and
 [citation guidelines](https://www.mortality.org/Research/CitationGuidelines).
 
@@ -41,3 +44,7 @@ source acknowledgment. See its [reuse policy](https://www.eia.gov/about/copyrigh
 
 The two derived energy objects reproduce the 1995–2020 analysis and the
 1990–1995 pre-treatment comparison.
+
+`derived/figure6_treated.png` and `derived/figure6_control.png` are the saved
+three-dimensional renderings used for Figure 6. The figure script combines
+these panels without changing their viewing perspective.

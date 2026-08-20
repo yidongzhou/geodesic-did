@@ -12,7 +12,7 @@ mortality_results <- load_single_object(
 
 make_panel <- function(data, sex) {
   treated <- data[data$g == "Eastern Europe", ]
-  # Match the control curves displayed in the submitted paper figure.
+  # Match the control curves displayed in Figure 3.
   control <- data[data$g == "Western Europe" & !data$abb %in% c("France", "UK"), ]
   ggplot2::ggplot() +
     ggplot2::geom_line(

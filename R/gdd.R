@@ -8,10 +8,13 @@
 #'   \code{list(name = value)}. See `Details'.
 #' @details Available control options are
 #' \describe{
-#' \item{type}{type of random objects. 'composition', 'function', 'measure',
-#' 'mvmeasure', 'network', and 'spd' are supported.}
-#' \item{lower}{The lower bound of the support of the measure. Default is \code{NULL}.}
-#' \item{upper}{The upper bound of the support of the measure. Default is \code{NULL}.}
+#' \item{type}{type of random objects. 'euclidean', 'composition', 'function',
+#' 'measure', 'mvmeasure', 'network', and 'spd' are supported. The default is
+#' 'euclidean'.}
+#' \item{lower}{Lower support bound. For univariate measures, an omitted bound
+#' is inferred from the inputs. Multivariate measures require finite bounds.}
+#' \item{upper}{Upper support bound. For univariate measures, an omitted bound
+#' is inferred from the inputs. Multivariate measures require finite bounds.}
 #' }
 #' @return A \code{gdd} object, which is a list containing the following components:
 #' \describe{
@@ -60,10 +63,6 @@ gdd <- function(y00, y01, y10, y11, optns = list()) {
   nu01 <- brct(y01, optns)
   nu10 <- brct(y10, optns)
   nu11 <- brct(y11, optns)
-  # omega <- brct(c(y00, y01, y10, y11), optns)
-
-  # nu1 <- gtm(nu11, nu10, omega, optns)
-  # nu2 <- gtm(nu01, nu00, omega, optns)
   omega <- nu10# reference point
 
   mu1 <- gtm(nu00, nu01, omega, optns)
@@ -102,7 +101,7 @@ harmonize_measure <- function(y) {
   })
 }
 
-# Preprocess mvmeasure input: list of n_i x d matrices -> list of sqrt-density vectors on 10^d grid
+# Preprocess mvmeasure input: list of n_i x d matrices -> list of density vectors on a 10^d grid
 harmonize_mvmeasure <- function(y, optns) {
   n <- length(y)
   d <- ncol(y[[1]])
@@ -153,7 +152,7 @@ brct <- function(y, optns, w = rep(1 / length(y), length(y))) {# y is a list
   n <- length(y)
   if (optns$type %in% c('composition', 'mvmeasure')) {
     mfd <- structure(1, class = 'Sphere')
-    yM <- matrix(unlist(y), ncol = n)# 3 by n
+    yM <- matrix(unlist(y), ncol = n)
     brct <- c(manifold::frechetMean(mfd = mfd, X = sqrt(yM), weight = w, maxit = 1e04))^2
   } else if (optns$type %in% c('euclidean', 'function', 'measure', 'network', 'spd')) {
     brct <- purrr::reduce(lapply(1:n, function(i) w[i] * y[[i]]), `+`)
