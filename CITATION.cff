@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use this code, please cite the paper and this repository."
+title: "Geodesic difference-in-differences: code and reproducibility materials"
+type: software
+authors:
+  - family-names: Zhou
+    given-names: Yidong
+  - family-names: Kurisu
+    given-names: Daisuke
+  - family-names: Otsu
+    given-names: Taisuke
+  - family-names: Müller
+    given-names: Hans-Georg
+repository-code: "https://github.com/yidongzhou/geodesic-did"
+license: MIT
+version: 0.1.0
+date-released: 2026-08-20

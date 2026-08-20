@@ -1,0 +1,33 @@
+Package: geodesicdid
+Type: Project
+Title: Reproducibility Materials for Geodesic Difference-in-Differences
+Version: 0.1.0
+Authors@R: c(
+    person("Yidong", "Zhou", email = "ydzhou@ucdavis.edu", role = c("aut", "cre")),
+    person("Daisuke", "Kurisu", role = "aut"),
+    person("Taisuke", "Otsu", role = "aut"),
+    person("Hans-Georg", "Müller", role = "aut")
+  )
+Description: Implementation, simulations, data-analysis scripts, archived
+    results, and figure-generation code for the paper Geodesic
+    Difference-in-Differences.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Depends: R (>= 4.4.0)
+Imports:
+    doSNOW,
+    fdadensity,
+    foreach,
+    frechet,
+    ggplot2,
+    ggtern,
+    ks,
+    manifold,
+    MASS,
+    patchwork,
+    plotly,
+    pracma,
+    purrr,
+    readxl,
+    scatterplot3d,
+    truncnorm

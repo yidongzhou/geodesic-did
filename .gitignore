@@ -1,0 +1,12 @@
+.DS_Store
+.Rhistory
+/.Renviron
+/.httr-oauth
+/.RData
+.Rproj.user/
+*.Rproj
+*.html
+*.log
+Rplots.pdf
+output/legacy/
+output/simulations/
