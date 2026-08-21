@@ -1,46 +1,82 @@
 # Geodesic difference-in-differences
 
-This repository contains the implementation and reproducibility materials for
+This repository provides an implementation of the method introduced in
 **“Geodesic difference-in-differences”** by Yidong Zhou, Daisuke Kurisu,
-Taisuke Otsu, and Hans-Georg Müller.
-
-The repository reproduces Figures 2–7 and the numerical results reported for
-the two real-data applications. The simulation results used to generate Figure
-2 are included, so reproducing the paper figures does not require rerunning the
-time-consuming simulations.
+Taisuke Otsu, and Hans-Georg Müller. The main function, `gdd()`, supports
+Euclidean, distributional, compositional, functional, network, and symmetric
+positive definite matrix outcomes. Code and data for reproducing the paper's
+simulations and applications are also included.
 
 ## Quick start
 
-Install the required R packages:
+The four inputs to `gdd()` are lists containing the observed outcomes in the
+standard difference-in-differences group-time cells:
+
+| | Pre-treatment | Post-treatment |
+|---|---|---|
+| Control | `y00` | `y01` |
+| Treated | `y10` | `y11` |
+
+Each list element is one unit's outcome.
+
+The following example applies geodesic DID to three-part compositional
+outcomes. Run it from the repository root.
 
 ```r
-install.packages(c(
-  "doSNOW", "fdadensity", "foreach", "frechet", "ggplot2", "ggtern",
-  "ks", "manifold", "MASS", "patchwork", "png", "pracma", "purrr",
-  "readxl", "truncnorm"
-))
+install.packages("manifold")  # required once
+source("R/lcm.R")
+source("R/gdd.R")
+
+y00 <- list(
+  c(fossil = .50, nuclear = .20, renewable = .30),
+  c(fossil = .40, nuclear = .25, renewable = .35)
+)
+y01 <- list(
+  c(fossil = .45, nuclear = .20, renewable = .35),
+  c(fossil = .35, nuclear = .25, renewable = .40)
+)
+y10 <- list(
+  c(fossil = .60, nuclear = .20, renewable = .20),
+  c(fossil = .55, nuclear = .25, renewable = .20)
+)
+y11 <- list(
+  c(fossil = .35, nuclear = .20, renewable = .45),
+  c(fossil = .30, nuclear = .25, renewable = .45)
+)
+
+fit <- gdd(y00, y01, y10, y11, optns = list(type = "composition"))
+round(rbind(
+  counterfactual = fit$gdd$start,
+  observed = fit$gdd$end
+), 3)
 ```
 
-Run any figure script directly, for example:
+`fit$gdd$start` is the estimated post-treatment Fréchet mean for the treated
+group in the absence of treatment, obtained by transporting the control-group
+change from the treated-group pre-treatment mean. `fit$gdd$end` is the observed
+treated-group post-treatment Fréchet mean. Under the conditions in the paper,
+the geodesic connecting these two objects estimates the geodesic average
+treatment effect on the treated. The treated-group pre-treatment Fréchet mean
+is available as `fit$omega`. For Euclidean outcomes, this construction reduces
+to the usual DID contrast.
 
-```sh
-Rscript figures/figure2_simulations.R
-```
+## Supported outcomes
 
-Each script saves its PDF in `figures/`:
+Set `optns$type` according to the outcome representation:
 
-| Paper figure | Script | Input |
-|---|---|---|
-| Figure 2 | `figures/figure2_simulations.R` | `em.RData`, `emmv.RData`, `en.RData` |
-| Figure 3 | `figures/figure3_mortality_distributions.R` | `mortality_results.RData` |
-| Figure 4 | `figures/figure4_mortality_gatt.R` | `mortality_results.RData` |
-| Figure 5 | `figures/figure5_mortality_pretrend.R` | `mortality_results.RData` |
-| Figure 6 | `figures/figure6_energy_sphere.R` | `figure6_treated.png`, `figure6_control.png` |
-| Figure 7 | `figures/figure7_energy_ternary.R` | `energy_results_1995_2020.RData` |
+| `type` | Each element of an input list |
+|---|---|
+| `"euclidean"` | A scalar or numeric vector; this is the default |
+| `"composition"` | A nonnegative vector summing to one |
+| `"function"` | Function values on a common grid |
+| `"measure"` | A sample from a univariate distribution |
+| `"mvmeasure"` | A matrix whose rows are multivariate observations |
+| `"network"` | A graph Laplacian matrix |
+| `"spd"` | A symmetric positive-definite matrix |
 
-The Figure 6 script combines the two three-dimensional sphere plots used in
-the paper, preserving their original viewing perspective; the underlying
-composition estimates are produced by `analysis/energy.R`.
+For `type = "mvmeasure"`, supply finite `lower` and `upper` bounds in `optns`.
+For univariate distributions, support bounds may be supplied but are otherwise
+inferred from the data.
 
 ## Repository structure
 
@@ -53,9 +89,45 @@ composition estimates are produced by `analysis/energy.R`.
 - `data/derived/`: simulation results, processed analysis results, and Figure 6
   panels.
 
-## Real-data analyses
+## Reproducing the paper results
 
-### Electricity generation
+The paper's analyses, simulations, and figures use additional R packages:
+
+```r
+install.packages(c(
+  "doSNOW", "fdadensity", "foreach", "frechet", "ggplot2", "ggtern",
+  "ks", "manifold", "MASS", "patchwork", "png", "pracma", "purrr",
+  "readxl", "truncnorm"
+))
+```
+
+### Figures
+
+Run a figure script directly from the repository root. Each script saves its
+PDF in `figures/`.
+
+| Paper figure | Script | Input |
+|---|---|---|
+| Figure 2 | `figures/figure2_simulations.R` | `em.RData`, `emmv.RData`, `en.RData` |
+| Figure 3 | `figures/figure3_mortality_distributions.R` | `mortality_results.RData` |
+| Figure 4 | `figures/figure4_mortality_gatt.R` | `mortality_results.RData` |
+| Figure 5 | `figures/figure5_mortality_pretrend.R` | `mortality_results.RData` |
+| Figure 6 | `figures/figure6_energy_sphere.R` | `figure6_treated.png`, `figure6_control.png` |
+| Figure 7 | `figures/figure7_energy_ternary.R` | `energy_results_1995_2020.RData` |
+
+For example:
+
+```sh
+Rscript figures/figure2_simulations.R
+```
+
+The Figure 6 script combines the two three-dimensional sphere plots used in
+the paper, preserving their original viewing perspective; the underlying
+composition estimates are produced by `analysis/energy.R`.
+
+### Real-data analyses
+
+#### Electricity generation
 
 The EIA workbook used in the analysis is included. Run the main analysis and
 the pre-treatment comparison with:
@@ -65,7 +137,7 @@ Rscript analysis/energy.R
 GDID_START_YEAR=1990 GDID_END_YEAR=1995 Rscript analysis/energy.R
 ```
 
-### Age-at-death distributions
+#### Age-at-death distributions
 
 The repository includes the processed analysis results used by Figures 3–5. To
 recreate the result file from the Human Mortality Database (HMD), download the
@@ -84,7 +156,7 @@ official East and West German files in memory. Raw HMD life-table files are not
 mirrored here; see [`data/README.md`](data/README.md) for provenance and
 licensing.
 
-## Simulations
+### Simulations
 
 The three `500 x 3` error matrices in `data/derived/` contain the simulation
 results produced by `simulations/mea.R`, `simulations/mvmea.R`, and
@@ -92,6 +164,7 @@ results produced by `simulations/mea.R`, `simulations/mvmea.R`, and
 simulation scripts write new results to `simulations/output/` without
 overwriting these included files. The univariate generator represents each
 distribution on a fixed 101-point quantile grid.
+
 For a short example run, use:
 
 ```sh
