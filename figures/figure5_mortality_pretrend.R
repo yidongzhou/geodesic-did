@@ -3,12 +3,7 @@
 script_arg <- grep("^--file=", commandArgs(trailingOnly = FALSE), value = TRUE)
 script_path <- normalizePath(gsub("~+~", " ", sub("^--file=", "", script_arg[1]), fixed = TRUE), mustWork = TRUE)
 root <- normalizePath(file.path(dirname(script_path), ".."), mustWork = TRUE)
-source(file.path(root, "R", "project_utils.R"))
-assert_packages("ggplot2")
-mortality_results <- load_single_object(
-  file.path(root, "data", "derived", "mortality_results.RData"),
-  "mortality_results"
-)
+load(file.path(root, "data", "derived", "mortality_results.RData"))
 
 grid <- mortality_results$grid
 plot_data <- data.frame(
@@ -34,8 +29,6 @@ figure <- ggplot2::ggplot(
   ggplot2::theme(text = ggplot2::element_text(size = 16))
 
 output <- file.path(root, "output", "figures", "figure5.pdf")
-ensure_directory(dirname(output))
+dir.create(dirname(output), recursive = TRUE, showWarnings = FALSE)
 ggplot2::ggsave(output, figure, width = 10, height = 4, device = grDevices::cairo_pdf)
-cat(sprintf("Saved %s; distances = %.6f (female), %.6f (male)\n", output,
-            mortality_results$placebo$Female$distance,
-            mortality_results$placebo$Male$distance))
+cat(sprintf("Saved %s\n", output))

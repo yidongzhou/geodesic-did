@@ -3,12 +3,7 @@
 script_arg <- grep("^--file=", commandArgs(trailingOnly = FALSE), value = TRUE)
 script_path <- normalizePath(gsub("~+~", " ", sub("^--file=", "", script_arg[1]), fixed = TRUE), mustWork = TRUE)
 root <- normalizePath(file.path(dirname(script_path), ".."), mustWork = TRUE)
-source(file.path(root, "R", "project_utils.R"))
-assert_packages(c("ggplot2", "patchwork"))
-mortality_results <- load_single_object(
-  file.path(root, "data", "derived", "mortality_results.RData"),
-  "mortality_results"
-)
+load(file.path(root, "data", "derived", "mortality_results.RData"))
 
 make_panel <- function(data, sex) {
   treated <- data[data$g == "Eastern Europe", ]
@@ -37,6 +32,6 @@ figure <- patchwork::wrap_plots(
   ncol = 1
 )
 output <- file.path(root, "output", "figures", "figure3.pdf")
-ensure_directory(dirname(output))
+dir.create(dirname(output), recursive = TRUE, showWarnings = FALSE)
 ggplot2::ggsave(output, figure, width = 10, height = 12, device = grDevices::cairo_pdf)
 cat(sprintf("Saved %s\n", output))

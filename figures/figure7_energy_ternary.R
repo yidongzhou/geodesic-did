@@ -3,13 +3,8 @@
 script_arg <- grep("^--file=", commandArgs(trailingOnly = FALSE), value = TRUE)
 script_path <- normalizePath(gsub("~+~", " ", sub("^--file=", "", script_arg[1]), fixed = TRUE), mustWork = TRUE)
 root <- normalizePath(file.path(dirname(script_path), ".."), mustWork = TRUE)
-source(file.path(root, "R", "project_utils.R"))
-assert_packages(c("ggplot2", "ggtern"))
 suppressPackageStartupMessages(library(ggtern))
-energy_results <- load_single_object(
-  file.path(root, "data", "derived", "energy_results_1995_2020.RData"),
-  "energy_results"
-)
+load(file.path(root, "data", "derived", "energy_results_1995_2020.RData"))
 
 points <- energy_results$points
 points$t <- factor(points$t, levels = c("1995", "2020"))
@@ -45,6 +40,6 @@ figure <- suppressWarnings(ggtern::ggtern(points) +
   ))
 
 output <- file.path(root, "output", "figures", "figure7.pdf")
-ensure_directory(dirname(output))
+dir.create(dirname(output), recursive = TRUE, showWarnings = FALSE)
 ggplot2::ggsave(output, figure, width = 15, height = 7, device = grDevices::cairo_pdf)
 cat(sprintf("Saved %s\n", output))

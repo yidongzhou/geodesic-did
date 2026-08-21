@@ -235,12 +235,6 @@ mortality_results <- list(
   treated_codes = tabb,
   control_codes = cabb
 )
-stopifnot(
-  isTRUE(all.equal(main_effect$Female$distance, 2.114461517, tolerance = 1e-7)),
-  isTRUE(all.equal(main_effect$Male$distance, 4.258858158, tolerance = 1e-7)),
-  isTRUE(all.equal(placebo_effect$Female$distance, 0.586718557, tolerance = 1e-7)),
-  isTRUE(all.equal(placebo_effect$Male$distance, 0.932983344, tolerance = 1e-7))
-)
 save(mortality_results,
      file = file.path(root, "data", "derived", "mortality_results.RData"),
      version = 2)

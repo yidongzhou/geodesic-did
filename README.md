@@ -11,7 +11,7 @@ time-consuming simulations.
 
 ## Quick start
 
-The code was checked with R 4.5.2. Install the required packages:
+Install the required R packages:
 
 ```r
 install.packages(c(
@@ -42,25 +42,6 @@ independently:
 The Figure 6 script combines the two three-dimensional sphere plots used in
 the paper, preserving their original viewing perspective; the underlying
 composition estimates are produced by `analysis/energy.R`.
-
-## Reproduced numerical results
-
-The included result files contain the following values reported in the paper.
-
-| Result | Reproduced value |
-|---|---:|
-| Figure 2 slope, univariate distributions | -0.412214 |
-| Figure 2 slope, multivariate distributions | -0.473058 |
-| Figure 2 slope, networks | -0.509145 |
-| Mortality GATT distance, female | 2.114462 |
-| Mortality GATT distance, male | 4.258858 |
-| Mortality pre-treatment distance, female | 0.586719 |
-| Mortality pre-treatment distance, male | 0.932983 |
-| Energy GATT distance, 1995–2020 | 0.215444 |
-| Energy pre-treatment distance, 1990–1995 | 0.016060 |
-
-The energy GATT starts at `(0.431707, 0.195107, 0.373186)` and ends at
-`(0.231255, 0.255217, 0.513528)`, ordered as fossil, nuclear, and renewable.
 
 ## Repository structure
 
@@ -113,7 +94,7 @@ results produced by `simulations/mea.R`, `simulations/mvmea.R`, and
 the simulation scripts writes new results to `output/simulations/` without
 overwriting these included files. The univariate generator represents each
 distribution on a fixed 101-point quantile grid.
-For a short diagnostic run, use for example:
+For a short example run, use:
 
 ```sh
 GDID_REPETITIONS=2 GDID_WORKERS=2 Rscript simulations/net.R

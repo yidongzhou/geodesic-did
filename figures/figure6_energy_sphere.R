@@ -3,8 +3,6 @@
 script_arg <- grep("^--file=", commandArgs(trailingOnly = FALSE), value = TRUE)
 script_path <- normalizePath(gsub("~+~", " ", sub("^--file=", "", script_arg[1]), fixed = TRUE), mustWork = TRUE)
 root <- normalizePath(file.path(dirname(script_path), ".."), mustWork = TRUE)
-source(file.path(root, "R", "project_utils.R"))
-assert_packages("png")
 
 treated <- png::readPNG(
   file.path(root, "data", "derived", "figure6_treated.png"),
@@ -17,7 +15,7 @@ control <- png::readPNG(
 stopifnot(identical(dim(treated), dim(control)))
 
 output <- file.path(root, "output", "figures", "figure6.pdf")
-ensure_directory(dirname(output))
+dir.create(dirname(output), recursive = TRUE, showWarnings = FALSE)
 page_width <- 12
 page_height <- page_width * nrow(treated) / (2 * ncol(treated))
 grDevices::cairo_pdf(output, width = page_width, height = page_height)
