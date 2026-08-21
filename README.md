@@ -45,8 +45,7 @@ composition estimates are produced by `analysis/energy.R`.
 
 ## Reproduced numerical results
 
-`tests/test_reported_results.R` verifies the following values in the included
-result files.
+The included result files contain the following values reported in the paper.
 
 | Result | Reproduced value |
 |---|---:|
@@ -71,9 +70,9 @@ The energy GATT starts at `(0.431707, 0.195107, 0.373186)` and ends at
 - `analysis/`: real-data analysis scripts.
 - `figures/`: one self-contained script for each paper figure, Figures 2–7.
 - `data/raw/`: the public-domain EIA workbook used in the paper.
-- `data/derived/`: simulation results, processed analysis results, and Figure 6 panels.
+- `data/derived/`: simulation results, processed analysis results, and Figure 6
+  panels.
 - `output/figures/`: reproduced figures.
-- `tests/`: fast checks for the core implementation and reported results.
 
 ## Real-data analyses
 
@@ -119,22 +118,6 @@ For a short diagnostic run, use for example:
 ```sh
 GDID_REPETITIONS=2 GDID_WORKERS=2 Rscript simulations/net.R
 ```
-
-## Verification
-
-```sh
-Rscript tests/test_core.R
-Rscript tests/test_reported_results.R
-```
-
-Checksums for the included data are in `data/SHA256SUMS`. Package versions from
-the verified run are recorded in `sessionInfo.txt`.
-
-To verify the included files from the repository root, run
-`shasum -a 256 -c data/SHA256SUMS`.
-
-`DESCRIPTION` is a dependency manifest for this reproducibility compendium;
-the repository is not structured as an installable R package.
 
 ## License
 
