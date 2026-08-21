@@ -30,7 +30,7 @@ figure <- ggplot2::ggplot(plot_data, ggplot2::aes(x = n, y = error)) +
   ggplot2::theme_bw() +
   ggplot2::theme(text = ggplot2::element_text(size = 16))
 
-output <- file.path(root, "output", "figures", "figure2.pdf")
+output <- file.path(root, "figures", "figure2.pdf")
 dir.create(dirname(output), recursive = TRUE, showWarnings = FALSE)
 ggplot2::ggsave(output, figure, width = 15, height = 6, device = grDevices::cairo_pdf)
 cat(sprintf("Saved %s\n", output))

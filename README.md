@@ -21,14 +21,13 @@ install.packages(c(
 ))
 ```
 
-Then run all six figure scripts:
+Run any figure script directly, for example:
 
 ```sh
-Rscript scripts/run_all_figures.R
+Rscript figures/figure2_simulations.R
 ```
 
-The PDFs are written to `output/figures/`. Each figure can also be generated
-independently:
+Each script saves its PDF in `figures/`:
 
 | Paper figure | Script | Input |
 |---|---|---|
@@ -49,11 +48,10 @@ composition estimates are produced by `analysis/energy.R`.
 - `simulations/`: Monte Carlo generation scripts. Full runs use 500 repetitions
   and can take substantial time.
 - `analysis/`: real-data analysis scripts.
-- `figures/`: one self-contained script for each paper figure, Figures 2–7.
+- `figures/`: six self-contained scripts and their corresponding paper figures.
 - `data/raw/`: the public-domain EIA workbook used in the paper.
 - `data/derived/`: simulation results, processed analysis results, and Figure 6
   panels.
-- `output/figures/`: reproduced figures.
 
 ## Real-data analyses
 
@@ -90,8 +88,8 @@ licensing.
 
 The three `500 x 3` error matrices in `data/derived/` contain the simulation
 results produced by `simulations/mea.R`, `simulations/mvmea.R`, and
-`simulations/net.R`, respectively, and are used to generate Figure 2. Running
-the simulation scripts writes new results to `output/simulations/` without
+`simulations/net.R`, respectively, and are used to generate Figure 2. The
+simulation scripts write new results to `simulations/output/` without
 overwriting these included files. The univariate generator represents each
 distribution on a fixed 101-point quantile grid.
 For a short example run, use:

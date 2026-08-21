@@ -31,7 +31,7 @@ figure <- patchwork::wrap_plots(
   make_panel(mortality_results$male_curves, "Male"),
   ncol = 1
 )
-output <- file.path(root, "output", "figures", "figure3.pdf")
+output <- file.path(root, "figures", "figure3.pdf")
 dir.create(dirname(output), recursive = TRUE, showWarnings = FALSE)
 ggplot2::ggsave(output, figure, width = 10, height = 12, device = grDevices::cairo_pdf)
 cat(sprintf("Saved %s\n", output))

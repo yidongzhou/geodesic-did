@@ -58,8 +58,8 @@ em <- foreach(n = nVec, .combine = cbind) %:%
     sqrt(sum((nu11 - gtm(gatt$gdd$start, gatt$gdd$end, nu11p, optns = list(type = 'measure', lower = -3, upper = 3)))^2) / (M + 1))
   }
 stopCluster(cl)
-dir.create(file.path(root, "output", "simulations"), recursive = TRUE, showWarnings = FALSE)
-save(em, file = file.path(root, "output", "simulations", "em.RData"))
+dir.create(file.path(root, "simulations", "output"), recursive = TRUE, showWarnings = FALSE)
+save(em, file = file.path(root, "simulations", "output", "em.RData"))
 
 aem <- colMeans(em)
 fitm <- lm(log(aem)~log(nVec))

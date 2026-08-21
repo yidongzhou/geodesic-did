@@ -88,8 +88,8 @@ en <- foreach(n = nVec, .combine = cbind) %:%
     sqrt(sum((nu11 - gtm(gatt$gdd$start, gatt$gdd$end, nu11p, optns = list(type = 'network')))^2))
   }
 stopCluster(cl)
-dir.create(file.path(root, "output", "simulations"), recursive = TRUE, showWarnings = FALSE)
-save(en, file = file.path(root, "output", "simulations", "en.RData"))
+dir.create(file.path(root, "simulations", "output"), recursive = TRUE, showWarnings = FALSE)
+save(en, file = file.path(root, "simulations", "output", "en.RData"))
 
 aen <- colMeans(en)
 fitn <- lm(log(aen)~log(nVec))

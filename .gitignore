@@ -8,4 +8,4 @@
 *.html
 *.log
 Rplots.pdf
-output/simulations/
+simulations/output/

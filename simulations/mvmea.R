@@ -140,8 +140,8 @@ emmv <- foreach::foreach(n = nVec, .combine = cbind) %:%
 
 stopCluster(cl)
 
-dir.create(file.path(root, "output", "simulations"), recursive = TRUE, showWarnings = FALSE)
-save(emmv, file = file.path(root, "output", "simulations", "emmv.RData"))
+dir.create(file.path(root, "simulations", "output"), recursive = TRUE, showWarnings = FALSE)
+save(emmv, file = file.path(root, "simulations", "output", "emmv.RData"))
 
 aemmv <- colMeans(emmv)
 fitmmv <- lm(log(aemmv)~log(nVec))

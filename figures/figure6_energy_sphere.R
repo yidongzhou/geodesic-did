@@ -14,7 +14,7 @@ control <- png::readPNG(
 )
 stopifnot(identical(dim(treated), dim(control)))
 
-output <- file.path(root, "output", "figures", "figure6.pdf")
+output <- file.path(root, "figures", "figure6.pdf")
 dir.create(dirname(output), recursive = TRUE, showWarnings = FALSE)
 page_width <- 12
 page_height <- page_width * nrow(treated) / (2 * ncol(treated))

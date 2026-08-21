@@ -28,7 +28,7 @@ figure <- ggplot2::ggplot(
   ggplot2::theme_bw() +
   ggplot2::theme(text = ggplot2::element_text(size = 16))
 
-output <- file.path(root, "output", "figures", "figure4.pdf")
+output <- file.path(root, "figures", "figure4.pdf")
 dir.create(dirname(output), recursive = TRUE, showWarnings = FALSE)
 ggplot2::ggsave(output, figure, width = 10, height = 4, device = grDevices::cairo_pdf)
 cat(sprintf("Saved %s\n", output))
