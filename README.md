@@ -7,6 +7,8 @@ Euclidean, distributional, compositional, functional, network, and symmetric
 positive definite matrix outcomes. Code and data for reproducing the paper's
 simulations and applications are also included.
 
+The paper was published online in *Biometrika* on 11 September 2026: [journal article](https://doi.org/10.1093/biomet/asag054) | [arXiv preprint](https://arxiv.org/abs/2501.17436).
+
 ## Quick start
 
 The four inputs to `gdd()` are lists containing the observed outcomes in the
@@ -170,6 +172,10 @@ For a short example run, use:
 ```sh
 GDID_REPETITIONS=2 GDID_WORKERS=2 Rscript simulations/net.R
 ```
+
+## Citation
+
+Zhou, Y., Kurisu, D., Otsu, T. & Müller, H.-G. (2026). Geodesic difference-in-differences. *Biometrika*, asag054. <https://doi.org/10.1093/biomet/asag054>
 
 ## License
 

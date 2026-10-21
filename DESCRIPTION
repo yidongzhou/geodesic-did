@@ -3,14 +3,15 @@ Type: Project
 Title: Reproducibility Materials for Geodesic Difference-in-Differences
 Version: 0.1.0
 Authors@R: c(
-    person("Yidong", "Zhou", email = "ydzhou@ucdavis.edu", role = c("aut", "cre")),
+    person("Yidong", "Zhou", email = "ydzhou@umn.edu", role = c("aut", "cre")),
     person("Daisuke", "Kurisu", role = "aut"),
     person("Taisuke", "Otsu", role = "aut"),
     person("Hans-Georg", "Müller", role = "aut")
   )
 Description: Implementation, simulations, data-analysis scripts, simulation
     results, and figure-generation code for the paper Geodesic
-    Difference-in-Differences.
+    Difference-in-Differences, published in Biometrika.
+URL: https://github.com/yidongzhou/geodesic-did, https://doi.org/10.1093/biomet/asag054
 License: MIT + file LICENSE
 Encoding: UTF-8
 Depends: R (>= 4.4.0)
